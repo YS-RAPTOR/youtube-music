@@ -13,3 +13,4 @@ electron-builder.yml
 !.yarn/sdks
 !.yarn/versions
 .vite-inspect
+v3
