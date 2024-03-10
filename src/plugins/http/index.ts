@@ -1,6 +1,7 @@
 import { createPlugin } from '@/utils';
 import registerCallback from '@/providers/song-info';
 import * as http from 'http';
+import * as fs from 'fs';
 
 interface Data {
   title: string;
@@ -13,7 +14,7 @@ interface Data {
 export default createPlugin({
   name: () => 'HTTP',
   description: () => 'HTTP Server to get information about the current song',
-  restartNeeded: true,
+  restartNeeded: false,
   config: {
     enabled: false,
   },
@@ -81,8 +82,18 @@ export default createPlugin({
       });
 
       const PORT = 2003;
-      const HOSTNAME = '127.0.0.1';
-      server.listen(PORT, HOSTNAME, () => {});
+      // read from config
+      const configFilePath = 'http.json';
+      var hostname = 'localhost';
+
+      try {
+        const config: any = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
+        if (config.hostname) {
+          hostname = config.hostname;
+        }
+      } catch (e) {}
+
+      server.listen(PORT, hostname, () => {});
     },
   },
 });
