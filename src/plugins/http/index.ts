@@ -84,7 +84,7 @@ export default createPlugin({
       const PORT = 2003;
       // read from config
       const configFilePath = 'http.json';
-      var hostname = 'localhost';
+      var hostname = '127.0.0.1';
 
       try {
         const config: any = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
